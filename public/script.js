@@ -1,24 +1,37 @@
 (function (window) {
 
   function Logger() {
+    var self = this;
     this.level = {
+      LOG: false,
       DEBUG: false,
       INFO: false,
       WARN: false,
       ERROR: false,
       OFF: true
     }
-    this.debug = function() {
-
+    var consoleMessage = function(logType, message) {
+      if (self.level[logType]) {
+        var consoleMethod = logType.toLowerCase();
+        if (console[consoleMethod]) {
+          console[consoleMethod](message);
+        }
+      }
     }
-    this.info = function() {
-
+    this.debug = function(message) {
+      consoleMessage('DEBUG', message)
     }
-    this.warn = function() {
-
+    this.info = function(message) {
+      consoleMessage('INFO', message)
     }
-    this.error = function() {
-
+    this.warn = function(message) {
+      consoleMessage('WARN', message)
+    }
+    this.error = function(message) {
+      consoleMessage('ERROR', message)
+    }
+    this.log = function(message) {
+      consoleMessage('LOG', message)
     }
     this.getLevel = function() {
       for (var key in this.level) {
@@ -41,7 +54,6 @@
             }
           }
         }
-
       }
     }
   }
