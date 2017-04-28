@@ -114,6 +114,7 @@ describe('Logger', function() {
     expect(loggerWithContext.warn).to.be.a('function')
     expect(loggerWithContext.error).to.be.a('function')
     expect(loggerWithContext.log).to.be.a('function')
+    expect(loggerWithContext.clear).to.be.a('function')
   })
   it('should remember the context and log level in the context object', function() {
     window.logger.setLevel('log');
@@ -122,5 +123,11 @@ describe('Logger', function() {
     expect( console.error.calledWith('Hello World')).to.be.false;
     loggerWithContext.log('hello');
     expect( console.log.calledWith('with context hello')).to.be.true;
+  })
+  it('should allow multiple arguments in context method', function() {
+    window.logger.setLevel('log');
+    var loggerWithContext = logger.context('with context');
+    loggerWithContext.log('hello', 'world', 'how', 'are', 'you');
+    expect( console.log.calledWith('with context hello world how are you')).to.be.true;
   })
 })
