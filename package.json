@@ -1,0 +1,13 @@
+{
+  "name": "logger",
+  "version": "1.0.0",
+  "description": "Logging Tool with Unit Testing",
+  "main": "server.js",
+  "scripts": {
+    "setup": "npm install",
+    "start": "nodemon server/server.js",
+    "test": "mocha -w"
+  },
+  "author": "Alex Bannon",
+  "license": "ISC"
+}
