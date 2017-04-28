@@ -3,58 +3,65 @@
   function Logger() {
     var self = this;
     this.level = {
-      LOG: false,
-      DEBUG: false,
-      INFO: false,
-      WARN: false,
-      ERROR: false,
-      OFF: true
+      LOG: 'LOG',
+      DEBUG: 'DEBUG',
+      INFO: 'INFO',
+      WARN: 'WARN',
+      ERROR: 'ERROR',
+      OFF: 'OFF'
     }
-    var consoleMessage = function(logType, message) {
-      if (self.level[logType]) {
+    this.currentLevel = this.level.OFF;
+    var consoleMessage = function(logType, messages) {
+      if (self.currentLevel == self.level[logType]) {
         var consoleMethod = logType.toLowerCase();
+        var finalMessage;
         if (console[consoleMethod]) {
-          console[consoleMethod](message);
+          if (typeof messages === 'object') {
+            finalMessage = messages.join(' ');
+          } else {
+            finalMessage = messages;
+          }
+          console[consoleMethod](finalMessage);
         }
       }
     }
-    this.debug = function(message) {
-      consoleMessage('DEBUG', message)
+    this.debug = function(...others) {
+      consoleMessage('DEBUG', others)
     }
-    this.info = function(message) {
-      consoleMessage('INFO', message)
+    this.info = function(...others) {
+      consoleMessage('INFO', others)
     }
-    this.warn = function(message) {
-      consoleMessage('WARN', message)
+    this.warn = function(...others) {
+      consoleMessage('WARN', others)
     }
-    this.error = function(message) {
-      consoleMessage('ERROR', message)
+    this.error = function(...others) {
+      consoleMessage('ERROR', others)
     }
-    this.log = function(message) {
-      consoleMessage('LOG', message)
+    this.log = function(...others) {
+      consoleMessage('LOG', others)
     }
     this.getLevel = function() {
-      for (var key in this.level) {
-        if (this.level.hasOwnProperty(key)) {
-          if (this.level[key] === true) {
-            return key
-          }
-        }
-      }
+      return this.currentLevel;
     }
     this.setLevel = function(level) {
       logLevel = level.toUpperCase();
       if (this.level[logLevel] !== undefined) {
-        for (var key in this.level) {
-          if (this.level.hasOwnProperty(key)) {
-            if (key == logLevel) {
-              this.level[key] = true
-            } else {
-              this.level[key] = false
-            }
-          }
+        this.currentLevel = this.level[logLevel];
+      }
+    }
+    this.context = function(context) {
+      function contextMethod(logLevel, context) {
+        return function(message) {
+          self[logLevel](context, message)
         }
       }
+      return {
+        log: contextMethod('log', context),
+        error: contextMethod('error', context),
+        warn: contextMethod('warn', context),
+        info: contextMethod('info', context),
+        debug: contextMethod('debug', context),
+      };
     }
   }
 
