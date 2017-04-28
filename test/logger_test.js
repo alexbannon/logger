@@ -2,27 +2,6 @@
 var expect = chai.expect;
 var should = chai.should();
 
-/*
-Done
-The logger should be exposed on the window object as window.logger
-The logger should support getting and setting a log level via (logger.getLevel and logger.setLevel respectively).
-The logger should default to the logger.level.OFF level.
-The logger should have methods debug, info, warn, and error.
-The log levels should be, correspondingly, logger.level.DEBUG, logger.level.INFO, logger.level.WARN, logger.level.ERROR, and logger.level.OFF.
-If the logger is set to level logger.level.WARN and the info method is called, then the logger should do nothing.
-However, if the warn method is called, the logger should call console.warn with the passed in arguments.
-If error method is called, the logger should call console.error with the passed in arguments.
-
-*/
-/* Necessary Functionality:
-handle multiple arguments
-If set to the logger.level.OFF level, the logger should not log anything
-
-
-The logger should have a context method, which accepts a string as an argument.
-This method should return an object with methods debug, info, warn, and error
-*/
-
 describe('Logger', function() {
 
   beforeEach(function() {
@@ -63,8 +42,7 @@ describe('Logger', function() {
     expect(window.logger.getLevel()).to.not.be.undefined
   });
   it('should default to an off log level', function() {
-    expect(window.logger.getLevel()).to.equal('OFF')
-    expect(window.logger.level.OFF).to.equal(true)
+    expect(window.logger.getLevel()).to.equal(window.logger.level.OFF)
   })
   it('should support setting a log level', function() {
     var currentLevel = window.logger.getLevel();
@@ -110,14 +88,39 @@ describe('Logger', function() {
     window.logger.setLevel('off');
 
     window.logger.log('Hello World');
-    expect( console.log.calledWith('Hello World') ).to.be.false;
+    expect( console.log.calledWith('Hello World')).to.be.false;
     window.logger.debug('Hello World');
-    expect( console.debug.calledWith('Hello World') ).to.be.false;
+    expect( console.debug.calledWith('Hello World')).to.be.false;
     window.logger.info('Hello World');
-    expect( console.info.calledWith('Hello World') ).to.be.false;
+    expect( console.info.calledWith('Hello World')).to.be.false;
     window.logger.warn('Hello World');
-    expect( console.warn.calledWith('Hello World') ).to.be.false;
+    expect( console.warn.calledWith('Hello World')).to.be.false;
     window.logger.error('Hello World');
-    expect( console.error.calledWith('Hello World') ).to.be.false;
+    expect( console.error.calledWith('Hello World')).to.be.false;
+  })
+  it('should be able to log to the console using multiple arguments', function() {
+    window.logger.setLevel('log');
+    window.logger.log('Hello', 'World.', 'How', 'Are', 'You', 'Today?');
+    expect( console.log.calledWith('Hello World. How Are You Today?')).to.be.true;
+  })
+  it('should have a context method that returns an object', function() {
+    var loggerWithContext = logger.context('with context');
+    expect(loggerWithContext).to.be.an('object');
+  })
+  it('should have methods available on the context object', function() {
+    var loggerWithContext = logger.context('with context');
+    expect(loggerWithContext.debug).to.be.a('function')
+    expect(loggerWithContext.info).to.be.a('function')
+    expect(loggerWithContext.warn).to.be.a('function')
+    expect(loggerWithContext.error).to.be.a('function')
+    expect(loggerWithContext.log).to.be.a('function')
+  })
+  it('should remember the context and log level in the context object', function() {
+    window.logger.setLevel('log');
+    var loggerWithContext = logger.context('with context');
+    loggerWithContext.error('HELLO');
+    expect( console.error.calledWith('Hello World')).to.be.false;
+    loggerWithContext.log('hello');
+    expect( console.log.calledWith('with context hello')).to.be.true;
   })
 })
