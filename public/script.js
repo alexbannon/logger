@@ -51,8 +51,8 @@
     }
     this.context = function(context) {
       function contextMethod(logLevel, context) {
-        return function(message) {
-          self[logLevel](context, message)
+        return function(...others) {
+          self[logLevel](context, ...others)
         }
       }
       return {
