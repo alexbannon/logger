@@ -55,6 +55,7 @@ describe('Logger', function() {
     expect(window.logger.warn).to.be.a('function')
     expect(window.logger.error).to.be.a('function')
     expect(window.logger.log).to.be.a('function')
+    expect(window.logger.clear).to.be.a('function')
   })
   it('should not fire method if log level is different from method', function() {
     window.logger.setLevel('warn');
@@ -114,7 +115,6 @@ describe('Logger', function() {
     expect(loggerWithContext.warn).to.be.a('function')
     expect(loggerWithContext.error).to.be.a('function')
     expect(loggerWithContext.log).to.be.a('function')
-    expect(loggerWithContext.clear).to.be.a('function')
   })
   it('should remember the context and log level in the context object', function() {
     window.logger.setLevel('log');
