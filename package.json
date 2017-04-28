@@ -4,7 +4,7 @@
   "description": "Logging Tool with Unit Testing",
   "main": "server.js",
   "scripts": {
-    "setup": "npm install",
+    "setup": "npm install && bower install",
     "start": "nodemon server/server.js",
     "test": "open test/index.html"
   },

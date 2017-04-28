@@ -1,0 +1,23 @@
+{
+  "name": "logger",
+  "description": "Logging Tool with Unit Testing",
+  "main": "server.js",
+  "authors": [
+    "Alex Bannon"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/alexbannon/logger",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "mocha": "~3.3.0",
+    "chai": "~3.5.0",
+    "sinon": "~2.1.0"
+  }
+}
