@@ -1,3 +1,8 @@
-function isEven(number) {
-  return number % 2 == 0;
-}
+(function (window) {
+
+  function Logger() {
+    
+  }
+
+  window.logger = new Logger();
+}(window));
