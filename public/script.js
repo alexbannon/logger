@@ -10,9 +10,9 @@
       ERROR: 'ERROR',
       OFF: 'OFF'
     }
-    this.currentLevel = this.level.OFF;
+    var currentLevel = this.level.OFF;
     var consoleMessage = function(logType, messages) {
-      if (self.currentLevel == self.level[logType]) {
+      if (currentLevel == self.level[logType]) {
         var consoleMethod = logType.toLowerCase();
         var finalMessage;
         if (console[consoleMethod]) {
@@ -40,13 +40,16 @@
     this.log = function(...others) {
       consoleMessage('LOG', others)
     }
+    this.clear = function() {
+      console.clear();
+    }
     this.getLevel = function() {
-      return this.currentLevel;
+      return currentLevel;
     }
     this.setLevel = function(level) {
       logLevel = level.toUpperCase();
       if (this.level[logLevel] !== undefined) {
-        this.currentLevel = this.level[logLevel];
+        currentLevel = this.level[logLevel];
       }
     }
     this.context = function(context) {
