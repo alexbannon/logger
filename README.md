@@ -11,7 +11,6 @@ npm start
 
 View Tests
 
-on linux/osx:
-npm test
+navigate to /test/index.html when the server is running
 
 otherwise, simply open test/index.html

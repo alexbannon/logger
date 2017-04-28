@@ -5,8 +5,7 @@
   "main": "server.js",
   "scripts": {
     "setup": "npm install && bower install",
-    "start": "nodemon server/server.js",
-    "test": "open test/index.html"
+    "start": "nodemon server/server.js"
   },
   "repository": {
     "type": "git",
