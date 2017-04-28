@@ -16,6 +16,11 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.1",
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "method-override": "^2.3.8",
+    "mocha": "^3.3.0",
+    "morgan": "^1.8.1",
+    "nodemon": "^1.11.0",
+    "should": "^11.2.1"
   }
 }

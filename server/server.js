@@ -4,20 +4,9 @@ var path = require('path');
 var port     = process.env.PORT || 3000;
 var morgan = require('morgan');             // log requests to the console (express4)
 var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
-var expressValidator = require('express-validator'); // validating the POST request in query controller
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 var root = process.env.root || path.normalize(__dirname + '/../');
 
-var redis = require('redis');
-var redisClient = redis.createClient();
-
-redisClient.on('ready',function() {
-  console.log('Redis is ready');
-});
-
-redisClient.on('error',function(err) {
-  console.log('Error in Redis: ' + err);
-});
 // configuration ===============================================================
 app.use(express.static(root + '/public/'));
 app.use(morgan('dev'));                                         // log every request to the console
@@ -34,5 +23,5 @@ app.get('/', function(req, res) {
 
 
 // listen (start app with node server.js) ======================================
-app.listen(port, '0.0.0.0');
+app.listen(port);
 console.log('App listening on port ' + port);
