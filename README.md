@@ -2,7 +2,7 @@ Installation Instructions
 
 Install node and NPM: https://nodejs.org/en/
 npm install
-
+package.json requires at least 6.2.0, but newest version should work fine
 
 
 View Code In Action On Server:
