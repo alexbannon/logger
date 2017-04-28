@@ -1,6 +1,7 @@
 'use strict';
 var expect = chai.expect;
 var should = chai.should();
+
 /*
 Done
 The logger should be exposed on the window object as window.logger
@@ -22,7 +23,37 @@ The logger should have a context method, which accepts a string as an argument.
 This method should return an object with methods debug, info, warn, and error
 */
 
+function privateFunction (time) {
+  if (time < 12) {
+    console.error('Good morning');
+  } else if (time >= 12 && time <19) {
+    console.error('Good afternoon');
+  } else { console.log('Good night!'); }
+}
+
 describe('Logger', function() {
+
+  beforeEach(function() {
+    window.sandbox = sinon.sandbox.create();
+
+    var log = console.log;
+    var error = console.error;
+    window.sandbox.stub(console, 'log', function() {
+      return log.apply(log, arguments);
+    })
+    window.sandbox.stub(console, 'error', function() {
+      return error.apply(error, arguments);
+    })
+  });
+  afterEach(function () {
+    sandbox.restore();
+  });
+
+  it('should log "Good morning" for hours > 12', function() {
+    privateFunction(5);
+    expect( console.error.calledWith('Good morning') ).to.be.true;
+  });
+
   it('should be available on the window object', function() {
     expect(window.logger).to.not.be.undefined
   });
