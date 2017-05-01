@@ -10,9 +10,12 @@
       ERROR: 'ERROR',
       OFF: 'OFF'
     }
+    var levelArray = ['DEBUG', 'LOG', 'INFO', 'WARN', 'ERROR'];
     var currentLevel = this.level.OFF;
     var consoleMessage = function(logType, messages) {
-      if (currentLevel == self.level[logType]) {
+      var currentLevelIndex = levelArray.indexOf(currentLevel);
+      var logTypeIndex = levelArray.indexOf(logType);
+      if (currentLevelIndex !== -1 && logTypeIndex !== -1 && logTypeIndex >= currentLevelIndex) {
         var consoleMethod = logType.toLowerCase();
         var finalMessage;
         if (console[consoleMethod]) {
